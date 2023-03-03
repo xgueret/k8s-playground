@@ -1,0 +1,59 @@
+Vagrant.configure("2") do |config|
+
+	VM_BOX = "bento/ubuntu-20.04"
+
+	CONTROL_PLANE_IP = "10.0.0.10"
+	CONTROL_PLANE_CPUS = 2
+	CONTROL_PLANE_MEM = 2048
+	CONTROL_PLANE_HOSTNAME = "control-plane"
+
+
+	WORKERS = [
+		{ :hostname => "node-worker1",   :ip => "10.0.0.11", :cpus => 1, :mem => 1024  },
+		{ :hostname => "node-worker2",   :ip => "10.0.0.12", :cpus => 1, :mem => 1024  }
+	]
+
+    PATH_COMMON_SCRIPT         = "scripts/common.sh"
+	PATH_CONTROL_PLANE_SCRIPT  = "scripts/control_plane.sh"
+
+	config.vm.box = VM_BOX
+	config.vm.boot_timeout = 1000
+
+    # configuration du node `control plane`
+	config.vm.define CONTROL_PLANE_HOSTNAME do |cp|
+		cp.vm.box = VM_BOX
+		cp.vm.hostname= CONTROL_PLANE_HOSTNAME
+		cp.vm.network "private_network", ip: CONTROL_PLANE_IP
+		cp.vm.provider "virtualbox" do |v|
+			v.memory = CONTROL_PLANE_MEM
+			v.cpus = CONTROL_PLANE_CPUS
+			v.name = CONTROL_PLANE_HOSTNAME
+		end # end v
+
+		cp.vm.provision :shell, path: PATH_COMMON_SCRIPT
+		cp.vm.provision :shell, path: PATH_CONTROL_PLANE_SCRIPT
+
+	end # end cp
+
+
+    # configuration des `workers`
+	WORKERS.each do |worker|
+
+		config.vm.define worker[:hostname] do |cfg|
+			cfg.vm.box = VM_BOX
+			cfg.vm.hostname= worker[:hostname]
+			cfg.vm.network "private_network", ip: worker[:ip] 
+			cfg.vm.provider "virtualbox" do |v|
+				v.memory = worker[:mem]
+				v.cpus = worker[:cpus]
+				v.name = worker[:hostname]
+			end # end v
+
+			cfg.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
+			cfg.vm.provision :shell, path: PATH_COMMON_SCRIPT
+
+		end # cfg
+    end #end worker
+
+end # end config
+
