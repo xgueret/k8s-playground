@@ -4,14 +4,10 @@ setting up a kubadm cluster with vagrant.
 
 
 
-run command
-
-```shell
-vagrant up
-```
+:eyes: [FinalizeTheInstallation.md](FinalizeTheInstallation.md)
 
 
 
-and execute all the command describe in the file [FinalizeTheInstallation.md](FinalizeTheInstallation.md)
+## :microscope: Labs
 
-> ***note** : I need to improve the cluster installation this is a first version*
+- [x] How_To_Setup_Jenkins_On_Kubernetes_Cluster_using_Helm
