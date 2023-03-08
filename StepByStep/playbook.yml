@@ -1,0 +1,46 @@
+---
+- name: Common Setup
+  hosts: all
+  gather_facts: true
+  become: true
+  vars:
+    packages_to_install:
+    - vim
+    - tree
+    - jq
+    - software-properties-common
+    - python3-pip
+    - ansible
+    managed_hosts:
+    - { ip: "10.0.0.10", name: "control-plane" }
+    - { ip: "10.0.0.11", name: "node-worker1" }
+    - { ip: "10.0.0.12", name: "node-worker2" }
+
+  tasks:
+
+  - name: Add source repository into sources list
+    ansible.builtin.apt_repository:
+      repo: ppa:ansible/ansible
+      state: present
+
+  - name: Update the APT Package Cache
+    become: true
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+
+  - name: Install a list of packages
+    package: 
+      state: "present"
+      name: "{{ item }}"
+    with_items: "{{ packages_to_install }}"
+
+  - name: Add IP address of all hosts to all hosts
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ item.ip }} {{ item.name }}"
+      state: present
+    with_items: "{{ managed_hosts }}"
+
+
+  
