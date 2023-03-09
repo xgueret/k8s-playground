@@ -1,5 +1,7 @@
 # How to build step by step a Kubernetes Cluster
 
+![](img/cluster.png)
+
 
 
 ## :eyes: Relevant Documentation
@@ -238,14 +240,6 @@ sudo kubeadm init --pod-network-cidr=$POD_CIDR --kubernetes-version=$KUBERNETES_
 
 
 
-install etcd-client
-
-```shell
-sudo apt-get install etcd-client
-```
-
-
-
 :eyes: [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 ```shell
@@ -258,6 +252,12 @@ echo "alias k=kubectl" >> /home/vagrant/.bashrc
 echo "set ts=2 sw=2 et" >> /home/vagrant/.vimrc
 echo "export do=\"--dry-run=client -o yaml\"" >> /home/vagrant/.profile
 echo "complete -o default -F __start_kubectl k" >> /home/vagrant/.profile
+```
+
+```shell
+source .bashrc
+source .vimrc
+source .profile
 ```
 
 
@@ -280,10 +280,78 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 
 
+check access cluster
+
+```shell
+k get nodes
+# or 
+kubectl get nodes
+```
+
+
+
 Install CNI(*Container Network Interface*) : Calico Network Add-On
 
 ```shell
 curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
 kubectl apply -f calico.yaml
 ```
+
+
+
+:watch: Wait until all is done
+
+```shell
+kubectl get pod -n kube-system -w | grep calico
+```
+
+
+
+install etcd-client
+
+```shell
+sudo apt-get install etcd-client
+```
+
+
+
+Install Metrics Server
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/scriptcamp/kubeadm-scripts/main/manifests/metrics-server.yaml
+```
+
+
+
+Join the Worker Nodes to the Cluster
+
+```shell
+export JOIN=$(kubeadm token create --print-join-command)
+```
+
+
+
+:point_right: on each worker `ssh node-worker1`  `ssh node-worker2`
+
+```shell
+ssh node-worker1 sudo $JOIN
+```
+
+```shell
+ssh node-worker2 sudo $JOIN
+```
+
+
+
+verify
+
+```shell
+k get nodes -w
+```
+
+
+
+....
+
+**:tada: Congratulations your kubernetes cluster is ready for use**
 

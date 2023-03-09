@@ -1,11 +1,15 @@
-# K8S PLAYGROUND 
+# Building our kubernetes cluster with kubeadm step by step
 
-setting up the working environment
+
+
+Setting up our infrastructure
 
 
 ```shell
 vagrant up
 ```
+
+
 
 go to the control-plane
 
@@ -15,7 +19,21 @@ vagrant ssh control-plane
 
 
 
-## :microscope: Labs
+## Hands on labs
 
-- [x] [How to build step by step a Kubernetes Cluster](../Labs/How_to_build_a_Kubernetes_Cluster.md)
-- [x] [How_To_Setup_Jenkins_On_Kubernetes_Cluster_using_Helm](../Labs/How_To_Setup_Jenkins_On_Kubernetes_Cluster_using_Helm.md)
+:point_right:  [How to build step by step a Kubernetes Cluster](../Labs/How_to_build_a_Kubernetes_Cluster.md)
+
+
+
+
+
+
+
+
+
+How to clean the infrastructure
+
+```shell
+vagrant destroy -f
+```
+
