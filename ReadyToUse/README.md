@@ -29,10 +29,16 @@ vagrant ssh control-plane
 
 
 
-## :microscope: Labs
+## HOW TO
 
-:point_right: [How to install helm](../Labs/How_To_install_helm.md)
+* [How to install helm](../Labs/How_To_install_helm.md)
+* [How To Install Docker On The Control Plane Node](../Labs/How_To_Install_Docker_On_The_Control_Plane_Node.md)
+* How to install a basic configuration of ingress with nginx controller :construction:
 
-:point_right: [How To Install Docker On The Control Plane Node](../Labs/How_To_Install_Docker_On_The_Control_Plane_Node.md)
 
-:point_right: How to install a basic configuration of ingress with nginx controller :construction:
+
+## LABS
+
+* [Spring Cloud Task As K8S cronjob](../Labs/lab-spring-cloud-task-as-k8s-cronjob/README.md)
+
+  
