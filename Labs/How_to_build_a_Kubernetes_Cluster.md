@@ -8,13 +8,13 @@
 
 :point_right: [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
-:point_right: [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+:point_right: [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)sudio
 
 :point_right: https://etcd.io/
 
 
 
-## :grin: Let's get our hands dirty 
+## :construction_worker:Let's get our hands dirty 
 
 
 
