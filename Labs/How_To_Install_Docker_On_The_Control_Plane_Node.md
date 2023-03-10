@@ -2,6 +2,18 @@
 
 
 
+## :eyes: Relevant Documentation
+
+:point_right: [Install Docker Engine on ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+:point_right: [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+
+:point_right: [Dockerfile refrence](https://docs.docker.com/engine/reference/builder/)
+
+
+
+## :construction_worker:Let's get our hands dirty 
+
 Create a docker group. Users in this group will have permission to use Docker on the system:
 
 ```shell

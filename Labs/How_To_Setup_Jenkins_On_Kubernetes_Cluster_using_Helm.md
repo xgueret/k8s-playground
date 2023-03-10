@@ -2,19 +2,26 @@
 
 
 
-> **Note**
->
-> * [installation de helm](https://helm.sh/fr/docs/intro/install/)
-> * [helm completion bash](https://helm.sh/docs/helm/helm_completion_bash/) 
+## :eyes: Relevant Documentation
+
+:point_right: [installation de helm](https://helm.sh/fr/docs/intro/install/) :star:
+
+:point_right: [helm completion bash](https://helm.sh/docs/helm/helm_completion_bash/) 
+
+:point_right: [Installer Jenkins](https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins)
+
+:point_right: [official documentation installing jenkins with helm](https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm-v3)
 
 
+
+## :construction_worker:Let's get our hands dirty 
 
 ```shell
 vagrant up
 vagrant ssh control-plane
 ```
 
-:point_right: [official documentation installing jenkins with helm](https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm-v3)
+
 
 check
 
@@ -25,11 +32,7 @@ version.BuildInfo{Version:"v3.11.1", GitCommit:"293b50c65d4d56187cd4e2f390f0ada4
 
 
 
-:point_right: [install jenkins with helm](https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-w(ith-helm-v3))
-
-
-
-**on control-plane**
+on control-plane
 
 ```shell
 mkdir labs
@@ -38,7 +41,7 @@ cd labs
 
 
 
-### :eyes: Create a persistent volume
+Create a persistent volume
 
 ```shell
 wget https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/tutorials/kubernetes/installing-jenkins-on-kubernetes/jenkins-volume.yaml -O jenkins-volume.yaml
@@ -55,7 +58,7 @@ sudo chown -R 1000:1000 /home/vagrant/playground/jenkins-volume
 
 
 
-**control-plane**
+control-plane
 
 ```shell
 kubectl apply -f jenkins-volume.yaml
@@ -63,7 +66,7 @@ kubectl apply -f jenkins-volume.yaml
 
 
 
-### :eyes: Create a service account
+Create a service account
 
 ```shell
 wget https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/tutorials/kubernetes/installing-jenkins-on-kubernetes/jenkins-sa.yaml -O jenkins-sa.yaml
@@ -72,10 +75,6 @@ wget https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/d
 ```shell
 kubectl apply -f jenkins-sa.yaml
 ```
-
-
-
-:point_right: [Installer Jenkins](https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins)
 
 ```shell
 wget https://raw.githubusercontent.com/jenkinsci/helm-charts/main/charts/jenkins/values.yaml -O jenkins-values.yaml
@@ -90,7 +89,7 @@ chart=jenkinsci/jenkins && \
 helm install jenkins -n jenkins -f jenkins-values.yaml $chart
 ```
 
-
+*(i) info*
 
 ```
 NAME: jenkins
@@ -127,12 +126,10 @@ kubectl get pods -n jenkins
 
 
 
-**how to clean the workspace**
+## :recycle: Cleaning the workspace
 
 ```shell
 helm uninstall jenkins -n jenkins
 k delete -f jenkins-volume.yaml
 k delete -f jenkins-sa.yaml
 ```
-
-
